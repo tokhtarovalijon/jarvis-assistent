@@ -6,12 +6,20 @@
 на GitHub. Здесь только безопасная для публикации логика.
 """
 import os
+import sys
 from groq import Groq
 import telebot
 import customtkinter as ctk
 
 # --- 0. НАСТРОЙКИ И ПУТИ К ПРОГРАММАМ ---
-os.chdir(os.path.dirname(os.path.abspath(__file__)))
+# При обычном запуске (python main.py) рабочая папка — там, где лежит main.py.
+# При запуске собранного .exe (PyInstaller) — рабочая папка рядом с самим .exe,
+# а НЕ во временной папке распаковки (иначе конспекты/презентации/память терялись
+# бы после каждого закрытия программы).
+if getattr(sys, "frozen", False):
+    os.chdir(os.path.dirname(sys.executable))
+else:
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 try:
     from secrets_local import GROQ_API_KEY, PEXELS_API_KEY
@@ -40,15 +48,15 @@ BOT_NAME = "Джарвис"
 BOT_NAME_LOWER = "джарвис"
 
 # --- HUD ЦВЕТОВАЯ СХЕМА (стиль Iron Man / J.A.R.V.I.S.) ---
-COLOR_BG = "#04070E"        # фон окна — почти чёрный тёмно-синий
-COLOR_PANEL = "#0A1424"     # фон панелей
-COLOR_PANEL_DARK = "#060D18"
-COLOR_BORDER = "#FF8C00"    # оранжевая HUD-окантовка
-COLOR_BLUE = "#2FA8FF"      # ожидание / ambient — арк-реактор синий
-COLOR_CYAN = "#00E5FF"      # слушаю
-COLOR_ORANGE = "#FF8C00"    # обрабатываю
-COLOR_SPEAK = "#FF4B2B"     # говорю — активный оранжево-красный
-COLOR_MUTED = "#4A6685"     # приглушённый текст
+COLOR_BG = "#1A1D21"        # фон окна — нейтральный тёмно-серый (как на референсе)
+COLOR_PANEL = "#22262B"     # фон панелей
+COLOR_PANEL_DARK = "#15171A"
+COLOR_BORDER = "#4DD9E8"    # бирюзово-голубая окантовка (вместо оранжевой)
+COLOR_BLUE = "#3AB8C7"      # ожидание / ambient — приглушённая бирюза
+COLOR_CYAN = "#7FEFFA"      # слушаю — яркий голубой
+COLOR_ORANGE = "#F2F2F0"    # обрабатываю — серебристо-белый (вместо оранжевого)
+COLOR_SPEAK = "#8FF5FF"     # говорю — яркое голубое свечение
+COLOR_MUTED = "#5A6570"     # приглушённый текст
 
 # Укажите реальные пути к .exe, если хотите запускать программы напрямую.
 # Если путь пустой — сработает default_command (например, "start capcut").
