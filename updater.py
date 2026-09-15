@@ -14,11 +14,11 @@
 import os
 import requests
 
-CURRENT_VERSION = "1.0.0"
+CURRENT_VERSION = "1.0.1"
 
 # Замените на свои данные после настройки репозитория на GitHub
-GITHUB_USER = "ваш_логин_github"
-GITHUB_REPO = "jarvis-assistant"
+GITHUB_USER = "toxtarovalijon"
+GITHUB_REPO = "jarvis-assistent"
 GITHUB_BRANCH = "main"
 
 FILES_TO_UPDATE = [
@@ -33,7 +33,7 @@ RAW_BASE = f"https://raw.githubusercontent.com/{GITHUB_USER}/{GITHUB_REPO}/{GITH
 
 
 def is_configured():
-    return GITHUB_USER != "ваш_логин_github"
+    return GITHUB_USER != "toxtarovalijon"
 
 
 def check_for_update():
