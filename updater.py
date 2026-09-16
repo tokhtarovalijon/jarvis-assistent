@@ -14,10 +14,10 @@
 import os
 import requests
 
-CURRENT_VERSION = "1.0.1"
+CURRENT_VERSION = "1.0.2"
 
 # Замените на свои данные после настройки репозитория на GitHub
-GITHUB_USER = "toxtarovalijon"
+GITHUB_USER = "tokhtarovalijon"
 GITHUB_REPO = "jarvis-assistent"
 GITHUB_BRANCH = "main"
 
