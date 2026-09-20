@@ -13,6 +13,7 @@ import pyttsx3
 
 from config import BOT_NAME, COLOR_SPEAK, COLOR_BLUE
 from runtime_state import stop_speech_event, is_voice_output_enabled, append_chat_log, update_reactor_color
+import settings
 
 pygame.mixer.init()
 
@@ -30,7 +31,8 @@ def get_offline_engine():
 
 # --- ОЗВУЧКА ---
 async def generate_audio(text, output_file="voice.mp3"):
-    communicate = edge_tts.Communicate(text, voice="ru-RU-DmitryNeural")
+    voice = settings.get("tts_voice")
+    communicate = edge_tts.Communicate(text, voice=voice)
     await communicate.save(output_file)
 
 
@@ -62,7 +64,19 @@ def _speak_fallback_offline(text):
         print(f"[Резервный TTS тоже не сработал] {e2}")
 
 
+def _clean_for_speech(text):
+    """Убирает markdown-разметку и служебные символы (**, #, *, `, -, •), которые ИИ
+    иногда добавляет в ответ — иначе TTS может произносить их вслух буквально
+    ('звёздочка', 'решётка' и т.п.), вместо того чтобы просто читать слова."""
+    cleaned = re.sub(r'[*_`#]+', '', text)
+    cleaned = re.sub(r'^\s*[-•]\s*', '', cleaned, flags=re.MULTILINE)
+    cleaned = re.sub(r'[ \t]{2,}', ' ', cleaned)
+    cleaned = re.sub(r'\n{3,}', '\n\n', cleaned)
+    return cleaned.strip()
+
+
 def speak(text):
+    text = _clean_for_speech(text)
     print(f"\n{BOT_NAME}: {text}")
     append_chat_log(f"Джарвис: {text}\n")
 
