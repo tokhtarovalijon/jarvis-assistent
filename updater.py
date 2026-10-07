@@ -30,7 +30,7 @@ import sys
 import subprocess
 import requests
 
-CURRENT_VERSION = "1.0.1"
+CURRENT_VERSION = "1.0.2"
 
 # Замените на свои данные после настройки репозитория на GitHub
 GITHUB_USER = "tokhtarovalijon"
